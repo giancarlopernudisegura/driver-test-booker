@@ -23,6 +23,14 @@ This is done to make it easy to script for different cities.
 node --unhandled-rejections=strict . <location>
 ```
 
+```sh
+# With multiple cities
+for l in "Edmonton" "Red Deer" "Leduc" "Ponoka" "Legal"
+do
+node --unhandled-rejections=strict . $l
+done
+```
+
 The progam will return `128` status code if no test were found.
 
 If a test is found, it will execute a notification function.
