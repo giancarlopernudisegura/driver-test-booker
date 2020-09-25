@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/giancarlopernudisegura/driver-test-booker#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "puppeteer": "^5.3.1",
+    "twilio": "^3.49.3",
     "yargs": "^16.0.3"
   }
 }

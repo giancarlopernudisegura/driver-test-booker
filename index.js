@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer')
+const sms = require('./sms')
 const { argv } = require('yargs')
 const user = require('./user.json')
 const info = require('./info.json')
@@ -75,7 +76,7 @@ const run = async (location) => {
     console.log(`${location} (${user.search.radius}km): ${testFound}`)
 
     if (testFound) {
-        // implement notification
+        sms(`Found a test for ${location} within ${user.search.radius}. 🚙`)
     } else {
         process.exit(128)
     }

@@ -4,6 +4,7 @@
 	"mvid": "123456789",
 	"birth": "YYYY/MM/DD",
 	"email": "email@example.com",
+	"phone": "+17801234567",
 	"search": {
 		"test": "Class 5 (Basic|Advanced) Road Test",
 		"radius": "10 | 25 | 50 | 100"
