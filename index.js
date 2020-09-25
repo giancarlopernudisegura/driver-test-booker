@@ -49,7 +49,7 @@ const run = async (location) => {
     // Fill out Eligibility Criteria
     logger('Filling out eligibility criteria')
     await page.waitForSelector('select')
-    await page.select('select#serviceGroupList', info.tests[user.search.test])
+    await page.select('select#serviceGroupList', info.tests[user.test])
     await page.waitForTimeout(shortTimeout)
     await page.click('[type=checkbox]')
     await page.waitForTimeout(shortTimeout)
@@ -59,7 +59,7 @@ const run = async (location) => {
     // Find a location
     logger(`Looking for available tests in ${location}`)
     await page.type('[name=CityName]', location)
-    await page.select('select#citySearchRadius', user.search.radius)
+    await page.select('select#citySearchRadius', user.radius)
     await page.waitForTimeout(shortTimeout)
     await page.click('button#searchSelectedLocation')
     await page.waitForNavigation({ timeout: 0 })
@@ -73,10 +73,10 @@ const run = async (location) => {
 
     await broswer.close()
 
-    console.log(`${location} (${user.search.radius}km): ${testFound}`)
+    console.log(`${location} (${user.radius}km): ${testFound}`)
 
     if (testFound) {
-        sms(`Found a test for ${location} within ${user.search.radius}. 🚙`)
+        sms(`Found a test for ${location} within ${user.radius}. 🚙`)
     } else {
         process.exit(128)
     }
@@ -85,8 +85,8 @@ const run = async (location) => {
 if (argv._.length === 0) {
     console.error('Error: Location argument missing')
     process.exit(1)
-} else if (!info.radii.includes(user.search.radius)) {
-    console.error(`Error: Radius ${user.search.radius} not in [${info.radii}]`)
+} else if (!info.radii.includes(user.radius)) {
+    console.error(`Error: Radius ${user.radius} not in [${info.radii}]`)
     process.exit(1)
 } else {
     for (loc of argv._) {
