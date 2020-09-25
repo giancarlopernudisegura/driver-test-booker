@@ -11,7 +11,7 @@ const logger = (msg) => {
     if (argv.v || argv.verbose) console.log(msg + '...')
 }
 
-const run = async () => {
+const run = async (location) => {
     const broswer = await puppeteer.launch({
         headless: true,
         args: [
@@ -56,8 +56,8 @@ const run = async () => {
     await page.waitForNavigation({ timeout: 0 })
 
     // Find a location
-    logger(`Looking for available tests in ${argv._[0]}`)
-    await page.type('[name=CityName]', argv._[0])
+    logger(`Looking for available tests in ${location}`)
+    await page.type('[name=CityName]', location)
     await page.select('select#citySearchRadius', user.search.radius)
     await page.waitForTimeout(shortTimeout)
     await page.click('button#searchSelectedLocation')
@@ -72,7 +72,7 @@ const run = async () => {
 
     await broswer.close()
 
-    console.log(testFound)
+    console.log(`${location} (${user.search.radius}km): ${testFound}`)
 
     if (testFound) {
         // implement notification
@@ -84,12 +84,16 @@ const run = async () => {
 if (argv._.length === 0) {
     console.error('Error: Location argument missing')
     process.exit(1)
-} else if (!info.locations.includes(argv._[0])) {
-    console.error(`Error: Location '${argv._[0]}' not in list of options`)
-    process.exit(1)
 } else if (!info.radii.includes(user.search.radius)) {
     console.error(`Error: Radius ${user.search.radius} not in [${info.radii}]`)
     process.exit(1)
 } else {
-    run()
+    for (loc of argv._) {
+        if (!info.locations.includes(loc)) {
+            console.error(`Error: Location '${loc}' not in list of options`)
+            process.exit(1)
+        } else {
+            run(loc)
+        }
+    }
 }

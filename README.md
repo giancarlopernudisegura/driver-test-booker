@@ -20,15 +20,12 @@ This is done to make it easy to script for different cities.
 
 # Usage
 ```sh
-node --unhandled-rejections=strict . [-v | --verbose] <location>
+node --unhandled-rejections=strict . [-v | --verbose] <location>...
 ```
 
 ```sh
 # With multiple cities
-for l in "Edmonton" "Red Deer" "Leduc" "Ponoka" "Legal"
-do
-node --unhandled-rejections=strict . $l
-done
+node --unhandled-rejections=strict . "Edmonton" "Red Deer" "Leduc" "Ponoka" "Legal"
 ```
 
 The progam will return `128` status code if no test were found.
