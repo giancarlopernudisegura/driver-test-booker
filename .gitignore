@@ -105,3 +105,6 @@ dist
 
 # User info json
 user.json
+
+# Result images
+*.png

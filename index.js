@@ -67,11 +67,8 @@ const run = async () => {
     logger('Processing response')
     await page.waitForTimeout(longTimeout)
     await page.screenshot({ path: 'result.png' })
-    const testFound = await page.evaluate(() => {
-        const msg = document.querySelector('.text-danger')
-        console.log(msg.innerText)
-        return msg.innerText !== info.nothing
-    })
+    const content = await page.content()
+    const testFound = content.indexOf(info.nothing) === -1
 
     await broswer.close()
 
