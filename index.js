@@ -8,7 +8,7 @@ const shortTimeout = 500
 const longTimeout = 5000
 
 const logger = (msg) => {
-    console.log(msg + '...')
+    if (argv.v || argv.verbose) console.log(msg + '...')
 }
 
 const run = async () => {

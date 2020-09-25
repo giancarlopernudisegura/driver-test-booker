@@ -20,7 +20,7 @@ This is done to make it easy to script for different cities.
 
 # Usage
 ```sh
-node --unhandled-rejections=strict . <location>
+node --unhandled-rejections=strict . [-v | --verbose] <location>
 ```
 
 ```sh
