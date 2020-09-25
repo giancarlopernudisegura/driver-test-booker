@@ -1,0 +1,44 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - uses: schdck/create-env-json@v1
+      with:
+        file-name: user.json
+        firstname: ${{ secrets.USER_FNAME }}
+        lastname: ${{ secrets.USER_LNAME }}
+        mvid: ${{ secrets.USER_MVID }}
+        birth: ${{ secrets.USER_DOB }}
+        email: ${{ secrets.USER_EMAIL }}
+        phone: ${{ secrets.USER_PHONE }}
+        test: ${{ secrets.USER_TEST }}
+        radius: ${{ secrets.USER_RADIUS }}
+    - run: node --unhandled-rejections=strict . "Edmonton" "Red Deer" "Leduc" "Ponoka" "Legal"
+      env:
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Screenshot
+        path: ./result.png
