@@ -17,4 +17,4 @@ const sms = (msg) => {
 		.then(message => console.log(`SMS: ${message}`))
 }
 
-export default sms
+module.exports = sms
