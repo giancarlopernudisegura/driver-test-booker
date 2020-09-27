@@ -28,10 +28,11 @@ jobs:
       env:
         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+        TWILIO_PHONE: ${{ secrets.TWILIO_PHONE }}
         USER_FNAME: ${{ secrets.USER_FNAME }}
         USER_LNAME: ${{ secrets.USER_LNAME }}
         USER_MVID: ${{ secrets.USER_MVID }}
-        USER_BIRTH: ${{ secrets.USER_DOB }}
+        USER_BIRTH: ${{ secrets.USER_BIRTH }}
         USER_EMAIL: ${{ secrets.USER_EMAIL }}
         USER_PHONE: ${{ secrets.USER_PHONE }}
         USER_TEST: ${{ secrets.USER_TEST }}

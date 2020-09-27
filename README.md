@@ -18,7 +18,7 @@ You can create these in a `.env` file or add them to the repository as GitHub se
 | `USER_FNAME`         | First name                         |                                     |
 | `USER_LNAME`         | Last name                          |                                     |
 | `USER_MVID`          | MVID on your license               | `xxxxxxxxx`                         |
-| `USER_DOB`           | Date of birth                      | `YYYY/MM/DD`                        |
+| `USER_BIRTH`         | Date of birth                      | `YYYY/MM/DD`                        |
 | `USER_EMAIL`         | Email                              | `email@example.com`                 |
 | `USER_PHONE`         | Phone number                       | `+1xxxxxxxxx`                       |
 | `USER_TEST`          | Test number                        | Class X (Basic\|Advanced) Road Test |
