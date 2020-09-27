@@ -40,5 +40,4 @@ node --unhandled-rejections=strict . "Edmonton" "Red Deer" "Leduc" "Ponoka" "Leg
 
 The progam will return `128` status code if no test were found.
 
-If a test is found, it will execute a notification function.
-*(not yet implemented)*
+If a test is found, it will execute a notification function which sends a text to your cellphone. You can also check a screenshot of the page as an artifact on the workflow.
