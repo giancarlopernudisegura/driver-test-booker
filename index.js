@@ -13,51 +13,51 @@ const logger = (msg) => {
 }
 
 const run = async (locations) => {
-    const broswer = await puppeteer.launch({
-        headless: true,
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox'
-        ]
-    })
-
-    const page = await broswer.newPage()
-
-    await page.goto(url, { waitUntil: 'networkidle0' })
-
-
-    // Book an appointment
-    await page.click('a#btnBookAppt')
-    
-    // Buy a road test
-    await page.click('button#invalidPermit', {
-        visible: true
-    })
-
-    // Fill out Driver Information
-    logger('Filling out driver information')
-    await page.type('[name=FirstName]', process.env.USER_FNAME)
-    await page.type('[name=LastName]', process.env.USER_LNAME)
-    await page.type('[name=MVID]', process.env.USER_MVID)
-    await page.type('[name=Birthdate]', process.env.USER_BIRTH)
-    await page.type('[name=Email]', process.env.USER_EMAIL)
-    await page.click('input[type=checkbox]')
-    await page.waitForTimeout(shortTimeout)
-    await page.click('[type=submit]')
-    await page.waitForNavigation({ timeout: 0 })
-
-    // Fill out Eligibility Criteria
-    logger('Filling out eligibility criteria')
-    await page.waitForSelector('select')
-    await page.select('select#serviceGroupList', info.tests[process.env.USER_TEST])
-    await page.waitForTimeout(shortTimeout)
-    await page.click('[type=checkbox]')
-    await page.waitForTimeout(shortTimeout)
-    await page.click('[type=submit]')
-    await page.waitForNavigation({ timeout: 0 })
-
     let allFalse = true
     for (loc of locations) {
+        const broswer = await puppeteer.launch({
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ]
+        })
+
+        const page = await broswer.newPage()
+
+        await page.goto(url, { waitUntil: 'networkidle0' })
+
+
+        // Book an appointment
+        await page.click('a#btnBookAppt')
+        
+        // Buy a road test
+        await page.click('button#invalidPermit', {
+            visible: true
+        })
+
+        // Fill out Driver Information
+        logger('Filling out driver information')
+        await page.type('[name=FirstName]', process.env.USER_FNAME)
+        await page.type('[name=LastName]', process.env.USER_LNAME)
+        await page.type('[name=MVID]', process.env.USER_MVID)
+        await page.type('[name=Birthdate]', process.env.USER_BIRTH)
+        await page.type('[name=Email]', process.env.USER_EMAIL)
+        await page.click('input[type=checkbox]')
+        await page.waitForTimeout(shortTimeout)
+        await page.click('[type=submit]')
+        await page.waitForNavigation({ timeout: 0 })
+
+        // Fill out Eligibility Criteria
+        logger('Filling out eligibility criteria')
+        await page.waitForSelector('select')
+        await page.select('select#serviceGroupList', info.tests[process.env.USER_TEST])
+        await page.waitForTimeout(shortTimeout)
+        await page.click('[type=checkbox]')
+        await page.waitForTimeout(shortTimeout)
+        await page.click('[type=submit]')
+        await page.waitForNavigation({ timeout: 0 })
+
         // Find a location
         logger(`Looking for available tests in ${loc}`)
         await page.type('[name=CityName]', loc)
@@ -79,11 +79,9 @@ const run = async (locations) => {
             sms(`Found a test for ${loc} within ${process.env.USER_RADIUS}. 🚙`)
             allFalse = false
         }
-
-        await page.click('[value=BACK]')
+        
+        await broswer.close()
     }
-
-    await broswer.close()
     
     if (allFalse) process.exit(128)
 }
