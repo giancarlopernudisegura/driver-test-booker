@@ -30,7 +30,7 @@ const run = async (locations) => {
 
         // Book an appointment
         await page.click('a#btnBookAppt')
-        
+
         // Buy a road test
         await page.click('button#invalidPermit', {
             visible: true
@@ -72,17 +72,17 @@ const run = async (locations) => {
         await page.screenshot({ path: 'result.png' })
         const content = await page.content()
         const testFound = content.indexOf(info.nothing) === -1
-        
+
         console.log(`${loc} (${process.env.USER_RADIUS}km): ${testFound}`)
-        
+
         if (testFound) {
             sms(`Found a test for ${loc} within ${process.env.USER_RADIUS}. 🚙`)
             allFalse = false
         }
-        
+
         await broswer.close()
     }
-    
+
     if (allFalse) process.exit(128)
 }
 
