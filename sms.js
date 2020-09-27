@@ -1,4 +1,3 @@
-const { phone } = require('./user.json')
 require('dotenv').config()
 const accountSID = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
@@ -11,7 +10,7 @@ const sms = (msg) => {
 	client.messages
 		.create({
 			to:	phone,
-			from: '+12185161699',
+			from: process.env.TWILIO_PHONE,
 			body: msg
 		})
 		.then(message => console.log(`SMS: ${message}`))

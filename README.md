@@ -4,31 +4,26 @@
 # Installation
 [Fork this repository](https://github.com/giancarlopernudisegura/driver-test-booker/fork) to use the integrated automation.
 
-You'll need a twilio account to use the sms function
-
-## Enviroment Variables
-You can create these in a `.env` file or add them to the repository secrets.
-
-| Key                  | Description                      | Format                              | Needed for `.env` |
-|----------------------|----------------------------------|-------------------------------------|-------------------|
-| `TWILIO_ACCOUNT_SID` | Twilio account string identifier |                                     | true              |
-| `TWILIO_AUTH_TOKEN`  | Twilio authentication token      |                                     | true              |
-| `USER_FNAME`         | First name                       |                                     | false             |
-| `USER_LNAME`         | Last name                        |                                     | false             |
-| `USER_MVID`          | MVID on your license             | `xxxxxxxxx`                         | false             |
-| `USER_DOB`           | Date of birth                    | `YYYY/MM/DD`                        | false             |
-| `USER_EMAIL`         | Email                            | `email@example.com`                 | false             |
-| `USER_PHONE`         | Phone number                     | `+1xxxxxxxxx`                       | false             |
-| `USER_TEST`          | Test number                      | Class X (Basic\|Advanced) Road Test | false             |
-| `USER_RADIUS`        | Search radius                    | 10 \| 25 \| 50 \| 100               | false             |
+You'll need a twilio account to use the sms function.
 
 # Configuration
-First, configure a user configuration called `user.json` based on the example file.
-```sh
-cp user.json.example user.json
-```
-Now replace the values with your own information.
-The search object defines the search parameters.
+All the configuration is done through environment variables.
+You can create these in a `.env` file or add them to the repository as GitHub secrets.
+
+| Key                  | Description                        | Format                              |
+|----------------------|------------------------------------|-------------------------------------|
+| `TWILIO_ACCOUNT_SID` | Twilio account string identifier   |                                     |
+| `TWILIO_AUTH_TOKEN`  | Twilio authentication token        |                                     |
+| `TWILIO_PHONE`       | Twilio phone number *not your own* | `+1xxxxxxxxx`                       |
+| `USER_FNAME`         | First name                         |                                     |
+| `USER_LNAME`         | Last name                          |                                     |
+| `USER_MVID`          | MVID on your license               | `xxxxxxxxx`                         |
+| `USER_DOB`           | Date of birth                      | `YYYY/MM/DD`                        |
+| `USER_EMAIL`         | Email                              | `email@example.com`                 |
+| `USER_PHONE`         | Phone number                       | `+1xxxxxxxxx`                       |
+| `USER_TEST`          | Test number                        | Class X (Basic\|Advanced) Road Test |
+| `USER_RADIUS`        | Search radius                      | 10 \| 25 \| 50 \| 100               |
+
 Notice how the city location is not defined.
 The city is passed as a string as an argument.
 This is done to make it easy to script for different cities.
@@ -38,8 +33,8 @@ This is done to make it easy to script for different cities.
 node --unhandled-rejections=strict . [-v | --verbose] <location>...
 ```
 
+## Example
 ```sh
-# With multiple cities
 node --unhandled-rejections=strict . "Edmonton" "Red Deer" "Leduc" "Ponoka" "Legal"
 ```
 

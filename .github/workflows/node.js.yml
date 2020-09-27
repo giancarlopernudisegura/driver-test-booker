@@ -24,21 +24,18 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - uses: schdck/create-env-json@v1
-      with:
-        file-name: user.json
-        firstname: ${{ secrets.USER_FNAME }}
-        lastname: ${{ secrets.USER_LNAME }}
-        mvid: ${{ secrets.USER_MVID }}
-        birth: ${{ secrets.USER_DOB }}
-        email: ${{ secrets.USER_EMAIL }}
-        phone: ${{ secrets.USER_PHONE }}
-        test: ${{ secrets.USER_TEST }}
-        radius: ${{ secrets.USER_RADIUS }}
     - run: node --unhandled-rejections=strict . "Edmonton" "Red Deer" "Leduc" "Ponoka" "Legal"
       env:
         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+        USER_FNAME: ${{ secrets.USER_FNAME }}
+        USER_LNAME: ${{ secrets.USER_LNAME }}
+        USER_MVID: ${{ secrets.USER_MVID }}
+        USER_BIRTH: ${{ secrets.USER_DOB }}
+        USER_EMAIL: ${{ secrets.USER_EMAIL }}
+        USER_PHONE: ${{ secrets.USER_PHONE }}
+        USER_TEST: ${{ secrets.USER_TEST }}
+        USER_RADIUS: ${{ secrets.USER_RADIUS }}
     - uses: actions/upload-artifact@v2
       with:
         name: Screenshot

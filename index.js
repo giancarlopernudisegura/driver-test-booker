@@ -1,7 +1,7 @@
+require('dotenv').config()
 const puppeteer = require('puppeteer')
 const sms = require('./sms')
 const { argv } = require('yargs')
-const user = require('./user.json')
 const info = require('./info.json')
 
 const url = 'https://scheduler.itialb4dmv.com/schAlberta'
@@ -36,11 +36,11 @@ const run = async (location) => {
 
     // Fill out Driver Information
     logger('Filling out driver information')
-    await page.type('[name=FirstName]', user.firstname)
-    await page.type('[name=LastName]', user.lastname)
-    await page.type('[name=MVID]', user.mvid)
-    await page.type('[name=Birthdate]', user.birth)
-    await page.type('[name=Email]', user.email)
+    await page.type('[name=FirstName]', process.env.USER_FIRSTNAME)
+    await page.type('[name=LastName]', process.env.USER_LASTNAME)
+    await page.type('[name=MVID]', process.env.USER_MVID)
+    await page.type('[name=Birthdate]', process.env.USER_BIRTH)
+    await page.type('[name=Email]', process.env.USER_EMAIL)
     await page.click('input[type=checkbox]')
     await page.waitForTimeout(shortTimeout)
     await page.click('[type=submit]')
@@ -49,7 +49,7 @@ const run = async (location) => {
     // Fill out Eligibility Criteria
     logger('Filling out eligibility criteria')
     await page.waitForSelector('select')
-    await page.select('select#serviceGroupList', info.tests[user.test])
+    await page.select('select#serviceGroupList', info.tests[process.env.USER_TEST])
     await page.waitForTimeout(shortTimeout)
     await page.click('[type=checkbox]')
     await page.waitForTimeout(shortTimeout)
@@ -59,7 +59,7 @@ const run = async (location) => {
     // Find a location
     logger(`Looking for available tests in ${location}`)
     await page.type('[name=CityName]', location)
-    await page.select('select#citySearchRadius', user.radius)
+    await page.select('select#citySearchRadius', process.env.USER_RADIUS)
     await page.waitForTimeout(shortTimeout)
     await page.click('button#searchSelectedLocation')
     await page.waitForNavigation({ timeout: 0 })
@@ -73,10 +73,10 @@ const run = async (location) => {
 
     await broswer.close()
 
-    console.log(`${location} (${user.radius}km): ${testFound}`)
+    console.log(`${location} (${process.env.USER_RADIUS}km): ${testFound}`)
 
     if (testFound) {
-        sms(`Found a test for ${location} within ${user.radius}. 🚙`)
+        sms(`Found a test for ${location} within ${process.env.USER_RADIUS}. 🚙`)
     } else {
         process.exit(128)
     }
@@ -85,8 +85,8 @@ const run = async (location) => {
 if (argv._.length === 0) {
     console.error('Error: Location argument missing')
     process.exit(1)
-} else if (!info.radii.includes(user.radius)) {
-    console.error(`Error: Radius ${user.radius} not in [${info.radii}]`)
+} else if (!info.radii.includes(process.env.USER_RADIUS)) {
+    console.error(`Error: Radius ${process.env.USER_RADIUS} not in [${info.radii}]`)
     process.exit(1)
 } else {
     for (loc of argv._) {
