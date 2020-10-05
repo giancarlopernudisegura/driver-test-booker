@@ -24,7 +24,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: 'node --unhandled-rejections=strict . "Edmonton" "Red Deer" -v || echo Error: Process completed with exit code 1.'
+    - run: |
+        while ! node --unhandled-rejections=strict . "Edmonton" "Red Deer"
+        do
+          echo "An error occured. Rerunning..."
+        done
       env:
         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
@@ -40,4 +44,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Screenshot
-        path: ./result.png
+        path: ./*.png
