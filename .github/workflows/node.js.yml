@@ -25,10 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: |
-        while ! node --unhandled-rejections=strict . "Edmonton" "Red Deer"
-        do
-          echo "An error occured. Rerunning..."
-        done
+        node --unhandled-rejections=strict . "Edmonton" "Red Deer
       env:
         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
