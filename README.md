@@ -1,6 +1,8 @@
 # Alberta Driver's Test Booker
 [![Node Version](https://img.shields.io/node/v/puppeteer)](https://nodejs.org/en/download/)
 
+### Note: The Government of Alberta has changed the system to books driver exams so this script is deprecated.
+
 # Installation
 [Fork this repository](https://github.com/giancarlopernudisegura/driver-test-booker/fork) to use the integrated automation.
 
